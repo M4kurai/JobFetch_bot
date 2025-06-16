@@ -1,0 +1,22 @@
+[project]
+name = "jobfetch-bot"
+version = "0.1.0"
+description = "Bot-hunter: parses vacancies, filters by criteria and sends new offers."
+authors = [
+    {name = "Dmitrii Makushin",email = "me@makurai.ru"}
+]
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "aiogram (>=3.20.0.post0,<4.0.0)",
+    "environs (>=14.2.0,<15.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.11.13"
+
