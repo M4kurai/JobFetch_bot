@@ -1,6 +1,6 @@
 [project]
 name = "jobfetch-bot"
-version = "0.1.0"
+version = "0.2.0"
 description = "Bot-hunter: parses vacancies, filters by criteria and sends new offers."
 authors = [
     { name = "Dmitrii Makushin", email = "me@makurai.ru" }
@@ -29,7 +29,7 @@ build-backend = "poetry.core.masonry.api"
 bump-my-version = "^1.2.0"
 
 [tool.bumpversion]
-current_version = "0.1.0"
+current_version = "0.2.0"
 commit = true
 tag = true
 message = "Bump version: {current_version} → {new_version}"
