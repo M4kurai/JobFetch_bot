@@ -7,11 +7,11 @@ from aiogram import Bot, Dispatcher
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 
-from app.bot.handlers import common, help, start
+from app.bot.handlers import common, help, sources, start
+from app.bot.menu.set_main_menu import set_main_menu
 from app.core.config import Config, load_config
 from app.locales.i18n_manager import I18nManager
 
-# Настройка базового логирования
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
@@ -21,29 +21,29 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-# Функция конфигурирования и запуска бота
 async def main() -> None:
     try:
-        # Загрузка конфигурации
-        logger.info("Загрузка конфигурации...")
         config: Config = load_config()
 
         bot = Bot(
             token=config.tg_bot.token,
             default=DefaultBotProperties(parse_mode=ParseMode.HTML),
         )
+
         dp = Dispatcher()
 
         dp.include_router(start.router)
         dp.include_router(help.router)
+        dp.include_router(sources.router)
         dp.include_router(common.router)
 
         project_root = Path(__file__).parent
         logger.info(f"Корневая директория проекта: {project_root}")
 
-        # Загрузка локализации
         logger.info("Загрузка локализации...")
         I18nManager.load_locales(str(project_root))
+
+        await set_main_menu(bot)
 
         logger.info("Удаление pending updates...")
         await bot.delete_webhook(drop_pending_updates=True)
@@ -52,9 +52,12 @@ async def main() -> None:
         await dp.start_polling(bot)
     except Exception as e:
         logger.error(f"Критическая ошибка при запуске бота: {e}")
+        logger.error(f"Тип ошибки: {type(e).__name__}")
+        import traceback
+
+        logger.error(f"Полная трассировка: {traceback.format_exc()}")
         sys.exit(1)
     finally:
-        # Корректное закрытие сессии бота
         if "bot" in locals():
             await bot.session.close()
             logger.info("Бот остановлен")

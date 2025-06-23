@@ -20,6 +20,19 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.11.13"
+bump2version = "^1.0.1"
 
 [tool.poetry]
 license = "MIT"
+
+[tool.bumpversion]
+current_version = "0.1.0"
+commit = true
+tag = true
+parse = "(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)"
+serialize = ["{major}.{minor}.{patch}"]
+
+[[tool.bumpversion.files]]
+filepath = "pyproject.toml"
+search = 'version = "{current_version}"'
+replace = 'version = "{new_version}"'
