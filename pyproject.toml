@@ -3,36 +3,35 @@ name = "jobfetch-bot"
 version = "0.1.0"
 description = "Bot-hunter: parses vacancies, filters by criteria and sends new offers."
 authors = [
-    {name = "Dmitrii Makushin",email = "me@makurai.ru"}
+    { name = "Dmitrii Makushin", email = "me@makurai.ru" }
 ]
 readme = "README.md"
 requires-python = ">=3.11"
+license = { text = "MIT" }
+
 dependencies = [
-    "aiogram (>=3.20.0.post0,<4.0.0)",
-    "environs (>=14.2.0,<15.0.0)",
-    "pyyaml (>=6.0.2,<7.0.0)"
+    "aiogram>=3.20.0.post0,<4.0.0",
+    "environs>=14.2.0,<15.0.0",
+    "pyyaml>=6.0.2,<7.0.0"
 ]
 
+[project.optional-dependencies]
+dev = [
+    "ruff>=0.11.13,<1.0.0",
+    "bump2version>=1.0.1,<2.0.0"
+]
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
 
-[tool.poetry.group.dev.dependencies]
-ruff = "^0.11.13"
-bump2version = "^1.0.1"
-
-[tool.poetry]
-license = "MIT"
-
 [tool.bumpversion]
 current_version = "0.1.0"
 commit = true
 tag = true
-parse = "(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)"
-serialize = ["{major}.{minor}.{patch}"]
+message = "Bump version: {current_version} → {new_version}"
+tag_message = "{new_version}"
 
-[[tool.bumpversion.files]]
-filepath = "pyproject.toml"
+[tool.bumpversion.files."pyproject.toml"]
 search = 'version = "{current_version}"'
 replace = 'version = "{new_version}"'
